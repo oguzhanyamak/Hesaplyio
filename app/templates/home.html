@@ -41,101 +41,118 @@
                 class="absolute inset-0 bg-blue-600/5 blur-2xl group-hover:bg-blue-600/10 transition-colors rounded-full">
             </div>
             <div class="relative flex items-center">
+                <!-- Visually Hidden Label for screen readers -->
+                <label for="calculator-search" class="sr-only">Hesaplama araçlarını ara</label>
+
                 <div class="absolute left-10 md:left-6 text-slate-400 group-hover:text-blue-500 transition-colors">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 md:h-6 md:w-6" fill="none"
-                        viewBox="0 0 24 24" stroke="currentColor">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" class="h-5 w-5 md:h-6 md:w-6"
+                        fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
                             d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                     </svg>
                 </div>
-                <input type="text" x-model="search" placeholder="Başlık ara... (TYT, Kredi, Alan...)"
+                <!-- Added debounce for better INP -->
+                <input type="text" id="calculator-search" x-model.debounce.300ms="search"
+                    placeholder="Başlık ara... (TYT, Kredi, Alan...)"
                     class="w-full bg-white border-2 border-slate-100 focus:border-blue-500 rounded-full py-4 md:py-6 pl-14 md:pl-16 pr-8 shadow-lg md:shadow-xl focus:outline-none transition-all text-base md:text-lg placeholder:text-slate-400 font-medium">
             </div>
         </div>
     </div>
 
     <!-- Category Filter Tabs -->
-    <div class="flex flex-wrap justify-center gap-2 md:gap-3 mb-10 md:mb-12 px-2" x-cloak>
+    <div class="flex flex-wrap justify-center gap-2 md:gap-3 mb-10 md:mb-12 px-2 min-h-[48px]" x-cloak role="tablist"
+        aria-label="Kategoriler">
         <template x-for="cat in categories" :key="cat">
-            <button @click="activeCategory = cat"
+            <button @click="activeCategory = cat" role="tab" :aria-selected="activeCategory === cat"
+                :id="'tab-' + cat.replace(/\s+/g, '-')" :aria-controls="'panel-' + cat.replace(/\s+/g, '-')"
+                :aria-label="cat + ' kategorisini göster'"
                 :class="activeCategory === cat ? 'bg-slate-900 text-white shadow-lg' : 'bg-white text-slate-600 hover:bg-slate-50 border border-slate-200'"
-                class="px-4 md:px-6 py-2 md:py-3 rounded-xl md:rounded-2xl text-xs md:text-sm font-bold transition-all duration-300 transform active:scale-95 whitespace-nowrap"
+                class="px-5 md:px-6 py-3 md:py-3.5 rounded-xl md:rounded-2xl text-xs md:text-sm font-bold transition-all duration-300 transform active:scale-95 whitespace-nowrap min-h-[44px]"
                 x-text="cat"></button>
         </template>
     </div>
 
-    <!-- Empty Results State -->
-    <div x-show="filteredCalculators.length === 0" class="text-center py-20" x-cloak>
-        <div class="w-20 h-20 bg-slate-100 rounded-full flex items-center justify-center mx-auto mb-6">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-slate-300" fill="none" viewBox="0 0 24 24"
-                stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M9.172 9.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
+    <!-- Results TabPanel -->
+    <div id="calculator-results-panel" role="tabpanel" :aria-labelledby="'tab-' + activeCategory.replace(/\s+/g, '-')">
+
+        <!-- Empty Results State -->
+        <div x-show="filteredCalculators.length === 0" class="text-center py-20" x-cloak>
+            <div class="w-20 h-20 bg-slate-100 rounded-full flex items-center justify-center mx-auto mb-6"
+                aria-hidden="true">
+                <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" class="h-10 w-10 text-slate-400"
+                    fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M9.172 9.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+            </div>
+            <h2 class="text-xl font-bold text-slate-800">Üzgünüz, sonuç bulunamadı</h2>
+            <p class="text-slate-600 mt-2 font-medium">Farklı bir anahtar kelime denemeye ne dersiniz?</p>
         </div>
-        <h3 class="text-xl font-bold text-slate-800">Üzgünüz, sonuç bulunamadı</h3>
-        <p class="text-slate-500 mt-2">Farklı bir anahtar kelime denemeye ne dersiniz?</p>
-    </div>
 
-    <!-- Grid View -->
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        <template x-for="calc in filteredCalculators" :key="calc.slug">
-            <a :href="'/' + calc.slug" class="group block h-full">
-                <div
-                    class="bg-white hover:bg-gradient-to-br hover:from-white hover:to-blue-50/30 border border-slate-200 group-hover:border-blue-200 rounded-4xl p-8 shadow-[0_4px_20px_rgb(0,0,0,0.03)] group-hover:shadow-[0_20px_50px_rgba(37,99,235,0.08)] transition-all duration-500 flex flex-col h-full transform group-hover:-translate-y-2">
-
-                    <div class="flex items-center justify-between mb-8">
+        <!-- Grid View -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" role="list">
+            <template x-for="calc in filteredCalculators" :key="calc.slug">
+                <div role="listitem">
+                    <a :href="'/' + calc.slug" class="group block h-full">
                         <div
-                            class="w-14 h-14 bg-slate-50 text-slate-400 group-hover:bg-blue-600 group-hover:text-white rounded-2xl flex items-center justify-center transition-all duration-500 shadow-inner group-hover:shadow-blue-500/20">
-                            <!-- Icon -->
-                            <svg x-show="calc.category === 'Matematik'" class="h-7 w-7" viewBox="0 0 24 24" fill="none"
-                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="m18 2-8 8" />
-                                <path d="m17 10-8-8" />
-                                <path d="m2 9 3 3-3 3" />
-                                <path d="M11 19h4" />
-                                <path d="M11 21h4" />
-                            </svg>
-                            <svg x-show="calc.category === 'Kredi Hesaplama'" class="h-7 w-7" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round">
-                                <rect x="2" y="5" width="20" height="14" rx="2" />
-                                <line x1="2" y1="10" x2="22" y2="10" />
-                            </svg>
-                            <svg x-show="calc.category === 'Sınav Puanı Hesaplama'" class="h-7 w-7" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round">
-                                <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
-                                <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
-                            </svg>
-                            <svg x-show="!['Matematik', 'Kredi Hesaplama', 'Sınav Puanı Hesaplama'].includes(calc.category)"
-                                class="h-7 w-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
-                            </svg>
+                            class="bg-white hover:bg-gradient-to-br hover:from-white hover:to-blue-50/30 border border-slate-200 group-hover:border-blue-200 rounded-4xl p-8 shadow-[0_4px_20px_rgb(0,0,0,0.03)] group-hover:shadow-[0_20px_50px_rgba(37,99,235,0.08)] transition-all duration-500 flex flex-col h-full transform group-hover:-translate-y-2">
+
+                            <div class="flex items-center justify-between mb-8">
+                                <div class="w-14 h-14 bg-slate-50 text-slate-400 group-hover:bg-blue-600 group-hover:text-white rounded-2xl flex items-center justify-center transition-all duration-500 shadow-inner group-hover:shadow-blue-500/20"
+                                    aria-hidden="true">
+                                    <!-- Icon -->
+                                    <svg x-show="calc.category === 'Matematik'" width="28" height="28" class="h-7 w-7"
+                                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="m18 2-8 8" />
+                                        <path d="m17 10-8-8" />
+                                        <path d="m2 9 3 3-3 3" />
+                                        <path d="M11 19h4" />
+                                        <path d="M11 21h4" />
+                                    </svg>
+                                    <svg x-show="calc.category === 'Kredi Hesaplama'" width="28" height="28"
+                                        class="h-7 w-7" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <rect x="2" y="5" width="20" height="14" rx="2" />
+                                        <line x1="2" y1="10" x2="22" y2="10" />
+                                    </svg>
+                                    <svg x-show="calc.category === 'Sınav Puanı Hesaplama'" width="28" height="28"
+                                        class="h-7 w-7" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
+                                        <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
+                                    </svg>
+                                    <svg x-show="!['Matematik', 'Kredi Hesaplama', 'Sınav Puanı Hesaplama'].includes(calc.category)"
+                                        width="28" height="28" class="h-7 w-7" viewBox="0 0 24 24" fill="none"
+                                        stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round">
+                                        <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
+                                    </svg>
+                                </div>
+                                <span
+                                    class="text-xs font-bold text-slate-400 group-hover:text-blue-500 uppercase tracking-widest transition-colors"
+                                    x-text="calc.category"></span>
+                            </div>
+
+                            <h2 class="text-xl font-bold text-slate-900 leading-tight group-hover:text-blue-700 transition group-hover:underline decoration-blue-600/30 underline-offset-4"
+                                x-text="calc.title"></h2>
+                            <p class="mt-4 text-slate-600 text-[0.95rem] leading-relaxed flex-grow font-medium"
+                                x-text="calc.description">
+                            </p>
+
+                            <div
+                                class="mt-10 pt-6 border-t border-slate-50 flex items-center text-blue-600 font-bold text-sm group-hover:translate-x-1 transition-transform">
+                                Hesaplamaya Git
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" class="h-4 w-4 ml-2"
+                                    fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+                                        d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                                </svg>
+                            </div>
                         </div>
-                        <span
-                            class="text-xs font-bold text-slate-400 group-hover:text-blue-500 uppercase tracking-widest transition-colors"
-                            x-text="calc.category"></span>
-                    </div>
-
-                    <h3 class="text-xl font-bold text-slate-900 leading-tight group-hover:text-blue-700 transition"
-                        x-text="calc.title"></h3>
-                    <p class="mt-4 text-slate-500 text-[0.95rem] leading-relaxed flex-grow" x-text="calc.description">
-                    </p>
-
-                    <div
-                        class="mt-10 pt-6 border-t border-slate-50 flex items-center text-blue-600 font-bold text-sm group-hover:translate-x-1 transition-transform">
-                        Hesaplamaya Git
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-2" fill="none" viewBox="0 0 24 24"
-                            stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
-                                d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                        </svg>
-                    </div>
-                </div>
-            </a>
-        </template>
+                    </a>
+            </template>
+        </div>
     </div>
 </div>
 {% endblock %}
