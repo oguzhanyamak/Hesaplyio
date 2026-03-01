@@ -1,0 +1,376 @@
+{% extends "base.html" %}
+
+{% block title %}{{ config.seo.meta_title }}{% endblock %}
+{% block description %}{{ config.seo.meta_description }}{% endblock %}
+
+{% block content %}
+<div class="max-w-5xl mx-auto">
+
+    <!-- Title Area -->
+    <div class="mb-8 md:mb-10 text-center md:text-left px-4 md:px-0">
+        <div
+            class="inline-flex items-center px-3 py-1 rounded-full bg-blue-50 text-blue-600 text-[0.65rem] md:text-xs font-semibold uppercase tracking-wider mb-4">
+            {{ config.category }}
+        </div>
+        <h1 class="text-2xl sm:text-3xl md:text-5xl font-extrabold tracking-tight text-slate-900 leading-tight">{{
+            config.title }}
+        </h1>
+        <p class="mt-4 text-slate-600 text-base md:text-lg lg:text-xl max-w-3xl">{{ config.description }}</p>
+    </div>
+
+    <!-- AdSense Above Fold Placeholder -->
+    <div
+        class="w-full h-20 md:h-24 bg-slate-50 border border-slate-200 border-dashed rounded-2xl mb-8 md:mb-12 mx-auto max-w-[95%] overflow-hidden">
+        <!-- AdSense code will be placed here -->
+    </div>
+
+    <!-- Alpine App -->
+    <div x-data='calculatorApp("{{ config.slug }}", {{ config.inputs | tojson }})'
+        class="grid grid-cols-1 lg:grid-cols-12 gap-6 md:gap-10 items-start relative animate-in fade-in slide-in-from-bottom-4 duration-700">
+
+        <!-- Left Column: Input Form -->
+        <div
+            class="lg:col-span-7 bg-white/70 backdrop-blur-xl rounded-3xl md:rounded-4xl p-6 md:p-12 shadow-[0_8px_40px_rgba(0,0,0,0.02)] border border-slate-200/60 relative overflow-hidden">
+
+            <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-600 to-indigo-600"></div>
+
+            <form @submit.prevent="calculate" class="space-y-6 md:space-y-8">
+                {% for input in config.inputs %}
+                <div class="group">
+                    <label
+                        class="block text-[0.9rem] md:text-[0.95rem] font-bold text-slate-800 mb-2 md:mb-3 ml-1 group-focus-within:text-blue-600 transition-colors">
+                        {{ input.label }}
+                    </label>
+                    <div class="relative">
+                        {% if input.type == 'select' %}
+                        <div class="relative">
+                            <select x-model="formData.{{ input.name }}"
+                                class="w-full bg-slate-50/50 border-2 border-slate-100 text-slate-900 rounded-xl md:rounded-2xl px-5 md:px-6 py-4 md:py-5 focus:outline-none focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500 focus:bg-white transition-all appearance-none cursor-pointer font-medium text-sm md:text-base">
+                                {% for opt in input.options %}
+                                <option value="{{ opt.value }}" {% if opt.value==input.default %}selected{% endif %}>
+                                    {{ opt.label }}
+                                </option>
+                                {% endfor %}
+                            </select>
+                            <div
+                                class="absolute right-5 md:right-6 top-1/2 -translate-y-1/2 pointer-events-none text-slate-400">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 md:h-5 md:w-5" fill="none"
+                                    viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+                                        d="M19 9l-7 7-7-7" />
+                                </svg>
+                            </div>
+                        </div>
+                        {% else %}
+                        <input type="{{ input.type }}" x-model="formData.{{ input.name }}"
+                            placeholder="{{ input.placeholder }}" {% if input.required %}required{% endif %}
+                            class="w-full bg-slate-50/50 border-2 border-slate-100 text-slate-900 rounded-xl md:rounded-2xl px-5 md:px-6 py-4 md:py-5 focus:outline-none focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500 focus:bg-white transition-all tabular-nums font-semibold placeholder:text-slate-300 placeholder:font-normal text-base"
+                            @keydown.enter="calculate">
+                        {% endif %}
+                    </div>
+                    {% if input.tooltip %}
+                    <div
+                        class="mt-2.5 ml-1 flex items-center gap-2 text-xs text-slate-500 bg-slate-100/50 w-fit px-3 py-1.5 rounded-lg border border-slate-200/50">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5 text-blue-500" fill="none"
+                            viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        {{ input.tooltip }}
+                    </div>
+                    {% endif %}
+                </div>
+                {% endfor %}
+
+                <button type="submit" :disabled="isLoading"
+                    class="w-full mt-6 md:mt-10 bg-slate-900 border-b-4 border-slate-950 text-white font-extrabold py-4 md:py-5 rounded-xl md:rounded-2xl shadow-xl hover:shadow-2xl hover:-translate-y-0.5 active:translate-y-0.5 active:border-b-0 transition-all disabled:opacity-50 disabled:cursor-not-allowed group relative overflow-hidden">
+                    <span x-show="!isLoading" class="flex items-center justify-center gap-3 text-base md:text-lg">
+                        Hemen Hesapla
+                        <svg xmlns="http://www.w3.org/2000/svg"
+                            class="h-4 w-4 md:h-5 md:w-5 group-hover:translate-x-1 transition-transform" fill="none"
+                            viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3"
+                                d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                        </svg>
+                    </span>
+                    <span x-show="isLoading" class="flex items-center justify-center gap-3">
+                        <svg class="animate-spin h-5 w-5 md:h-6 md:w-6 text-white" fill="none" viewBox="0 0 24 24">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4">
+                            </circle>
+                            <path class="opacity-75" fill="currentColor"
+                                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+                            </path>
+                        </svg>
+                        Hesaplanıyor...
+                    </span>
+                </button>
+            </form>
+        </div>
+
+        <!-- Right Column: Result Layout -->
+        <div class="lg:col-span-5 relative lg:sticky lg:top-24 h-fit">
+
+            <!-- Result Card -->
+            <div x-show="result" x-transition:enter="transition ease-out duration-500 transform"
+                x-transition:enter-start="opacity-0 scale-95 translate-y-8"
+                x-transition:enter-end="opacity-100 scale-100 translate-y-0"
+                class="bg-slate-900 text-white rounded-3xl md:rounded-4xl p-6 md:p-10 shadow-2xl relative overflow-hidden border border-slate-800"
+                style="display: none;">
+
+                <!-- Premium Blurs -->
+                <div
+                    class="absolute -top-10 -right-10 w-64 h-64 bg-blue-600/30 blur-[80px] rounded-full pointer-events-none">
+                </div>
+                <div
+                    class="absolute -bottom-10 -left-10 w-64 h-64 bg-indigo-600/20 blur-[100px] rounded-full pointer-events-none">
+                </div>
+
+                <div class="relative z-10 text-center border-b border-white/10 pb-6 md:pb-10 mb-6 md:mb-8">
+                    <span
+                        class="inline-block px-3 py-1 rounded-full bg-white/10 text-blue-300 text-[0.6rem] md:text-[0.7rem] font-black uppercase tracking-[0.2em] mb-4"
+                        x-text="result?.summary?.label">SONUÇ</span>
+                    <div
+                        class="mt-2 text-4xl sm:text-5xl md:text-7xl font-[900] tabular-nums tracking-tighter text-transparent bg-clip-text bg-gradient-to-b from-white to-slate-400">
+                        <span x-text="formattedResultValue()"></span>
+                    </div>
+                </div>
+
+                <div class="relative z-10 space-y-3">
+                    <template x-for="item in result?.breakdown" :key="item.label">
+                        <div
+                            class="flex justify-between items-center py-4 px-5 rounded-2xl bg-white/5 hover:bg-white/10 transition-colors border border-transparent hover:border-white/10 group">
+                            <span
+                                class="text-slate-400 text-sm font-medium group-hover:text-slate-300 transition-colors"
+                                x-text="item.label"></span>
+                            <span class="font-bold text-slate-100 tabular-nums text-lg" x-text="item.value"></span>
+                        </div>
+                    </template>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="relative z-10 mt-10 grid grid-cols-2 gap-4">
+                    <button @click="window.print()"
+                        class="flex items-center justify-center gap-2 bg-white/10 hover:bg-white/20 py-4 rounded-2xl text-xs font-bold transition-all">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
+                        </svg>
+                        Yazdır
+                    </button>
+                    <button @click="navigator.clipboard.writeText(formattedResultValue())"
+                        class="flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-500 py-4 rounded-2xl text-xs font-bold transition-all shadow-lg shadow-blue-600/20">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3" />
+                        </svg>
+                        Kopyala
+                    </button>
+                </div>
+            </div>
+
+            <!-- Empty Pre-Calculation State -->
+            <div x-show="!result"
+                class="bg-white/50 backdrop-blur-sm rounded-4xl p-12 border-2 border-slate-200/50 border-dashed text-center flex flex-col justify-center items-center h-full min-h-[400px] shadow-inner animate-pulse">
+                <div class="w-20 h-20 bg-slate-100 rounded-3xl flex items-center justify-center mb-6">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-slate-300" fill="none"
+                        viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                            d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                    </svg>
+                </div>
+                <h3 class="font-bold text-slate-800 text-xl">Sizi Dinliyoruz</h3>
+                <p class="text-slate-500 mt-4 leading-relaxed">Formu doldurduktan sonra sonuçlarınız <br>burada otomatik
+                    olarak görünecek.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contextual CTA Widget (Loads when result loaded) -->
+    <div x-show="result"
+        class="mt-6 bg-gradient-to-r from-emerald-50 to-teal-50 border border-emerald-100 rounded-2xl p-5 shadow-sm transform transition-all duration-500 delay-300"
+        x-transition:enter="opacity-0 translate-y-4" x-transition:enter-end="opacity-100 translate-y-0"
+        style="display:none;">
+        <div class="flex items-start gap-4">
+            <div
+                class="w-12 h-12 bg-white rounded-xl shadow-[0_2px_10px_rgb(0,0,0,0.05)] flex items-center justify-center font-bold text-emerald-600 shrink-0 text-xl border border-emerald-50">
+                E</div>
+            <div>
+                <h4 class="font-bold text-slate-800 text-sm">Sponsor Banka Fırsatı</h4>
+                <p class="text-xs text-slate-600 mt-1 leading-relaxed">Maaş hesabı olanlara özel %52 faiz oranı!
+                    Ücretsiz EFT ve Havale imkanı.</p>
+                <a href="#"
+                    class="mt-3 inline-flex items-center text-xs font-bold text-emerald-700 bg-white px-4 py-2 rounded-lg border border-emerald-200 hover:bg-emerald-600 hover:text-white hover:border-emerald-600 transition shadow-sm">Başvur
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 ml-1" viewBox="0 0 20 20"
+                        fill="currentColor">
+                        <path fill-rule="evenodd"
+                            d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
+                            clip-rule="evenodd" />
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+<!-- Payment Plan Block (Conditionally Rendered) -->
+<div x-show="result?.payment_plan"
+    class="mt-12 bg-white rounded-3xl p-6 sm:p-10 shadow-sm border border-slate-200 overflow-hidden"
+    x-transition:enter="transition ease-out duration-500" x-transition:enter-start="opacity-0 translate-y-8"
+    x-transition:enter-end="opacity-100 translate-y-0" style="display: none;">
+    <h3 class="text-2xl font-bold text-slate-800 mb-6 border-l-4 border-blue-600 pl-4">Aylık Ödeme Planı Tablosu
+    </h3>
+    <div class="overflow-x-auto">
+        <table class="w-full text-left border-collapse whitespace-nowrap">
+            <thead>
+                <tr class="bg-slate-50 text-slate-500 text-sm uppercase tracking-wider border-b border-slate-200">
+                    <th class="p-4 font-semibold rounded-tl-xl">Taksit</th>
+                    <th class="p-4 font-semibold">Taksit Tutarı</th>
+                    <th class="p-4 font-semibold">Anapara</th>
+                    <th class="p-4 font-semibold">Faiz + Vergi</th>
+                    <th class="p-4 font-semibold rounded-tr-xl">Kalan Borç</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-100">
+                <template x-for="row in result?.payment_plan" :key="row.month">
+                    <tr class="hover:bg-slate-50/50 transition-colors">
+                        <td class="p-4 text-slate-500 font-medium text-sm">
+                            <span class="bg-white border border-slate-200 px-2 py-1 rounded-md"
+                                x-text="row.month"></span>. Ay
+                        </td>
+                        <td class="p-4 font-bold text-slate-900 tabular-nums">
+                            <span x-text="formatCurrency(row.installment)"></span> <span
+                                class="text-xs text-slate-400">₺</span>
+                        </td>
+                        <td class="p-4 text-slate-600 tabular-nums">
+                            <span x-text="formatCurrency(row.principal)"></span> ₺
+                        </td>
+                        <td class="p-4 text-slate-600 tabular-nums">
+                            <span x-text="formatCurrency(row.interest)"></span> ₺
+                        </td>
+                        <td class="p-4 text-slate-500 tabular-nums font-medium">
+                            <span x-text="formatCurrency(row.remaining_balance)"></span> ₺
+                        </td>
+                    </tr>
+                </template>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- SEO & FAQ Block -->
+<div class="mt-20 border-t border-slate-200 pt-16">
+    <h2 class="text-3xl font-bold text-slate-900 mb-8 border-l-4 border-blue-600 pl-4">Nasıl Hesaplanır ve Sıkça
+        Sorulan Sorular</h2>
+
+    <!-- JSON-LD Structured Data Output -->
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": [
+                {% for item in config.faq %}
+                {
+                    "@type": "Question",
+                    "name": "{{ item.question }}",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "{{ item.answer }}"
+                    }
+                }{% if not loop.last %},{% endif %}
+                {% endfor %}
+            ]
+        }
+        </script>
+
+    <div class="space-y-6">
+        {% for item in config.faq %}
+        <div class="bg-white border border-slate-200 rounded-2xl p-6 sm:p-8 shadow-sm">
+            <h3 class="font-bold text-xl text-slate-800">{{ item.question }}</h3>
+            <p class="mt-4 text-slate-600 leading-relaxed">{{ item.answer }}</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+</div>
+
+<!-- Scripts -->
+<script>
+    document.addEventListener('alpine:init', () => {
+        Alpine.data('calculatorApp', (slug, inputsConfig) => ({
+            slug: slug,
+            formData: {},
+            isLoading: false,
+            result: null,
+            targetValue: 0,
+            displayValue: 0, // Animated value
+
+            init() {
+                inputsConfig.forEach(input => {
+                    if (input.default) this.formData[input.name] = input.default;
+                });
+            },
+
+            formatCurrency(val) {
+                if (val === undefined || val === null) return '';
+                return val.toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            },
+
+            formattedResultValue() {
+                return this.formatCurrency(this.displayValue);
+            },
+
+            animateValue(targetVal) {
+                let currentVal = 0;
+                const duration = 500; // ms
+                const fps = 60;
+                const steps = duration / (1000 / fps);
+                const increment = targetVal / steps;
+
+                let currentStep = 0;
+                const interval = setInterval(() => {
+                    currentStep++;
+                    currentVal += increment;
+
+                    if (currentStep >= steps) {
+                        currentVal = targetVal;
+                        clearInterval(interval);
+                    }
+                    this.displayValue = currentVal;
+                }, 1000 / fps);
+            },
+
+            async calculate() {
+                if (this.isLoading) return;
+                this.isLoading = true;
+
+                // Keep the current result visible but show loading state
+                try {
+                    const response = await fetch(`/api/calculate/${this.slug}`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(this.formData)
+                    });
+                    const resData = await response.json();
+
+                    if (resData.status === 'success') {
+                        this.result = resData.data;
+                        this.targetValue = this.result.summary.value;
+                        // Always start from 0 for fresh feeling, OR from current if close (let's stick to 0 for impact)
+                        this.displayValue = 0;
+                        this.animateValue(this.targetValue);
+                    } else {
+                        alert("Hata oluştu: " + resData.message);
+                    }
+                } catch (error) {
+                    alert("Ağ hatası: Bağlantı kesilmiş olabilir.");
+                } finally {
+                    this.isLoading = false;
+                }
+            }
+        }));
+    });
+</script>
+{% endblock %}
