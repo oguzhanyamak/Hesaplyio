@@ -33,6 +33,21 @@ async def home(request: Request):
         }
     )
 
+@router.get("/hakkimizda", response_class=HTMLResponse)
+async def about(request: Request):
+    """About us page."""
+    return templates.TemplateResponse("about.html", {"request": request})
+
+@router.get("/gizlilik", response_class=HTMLResponse)
+async def privacy(request: Request):
+    """Privacy policy page."""
+    return templates.TemplateResponse("privacy.html", {"request": request})
+
+@router.get("/iletisim", response_class=HTMLResponse)
+async def contact(request: Request):
+    """Contact page."""
+    return templates.TemplateResponse("contact.html", {"request": request})
+
 @router.get("/{calculator_slug}", response_class=HTMLResponse)
 async def serve_calculator_page(request: Request, calculator_slug: str):
     """Serves the visually stunning, SSR optimized calculator page."""

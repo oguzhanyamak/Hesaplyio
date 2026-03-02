@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+
+{% block title %}İletişim | bize ulaşın - {{ settings.app_name }}{% endblock %}
+{% block description %}Her türlü öneri, görüş, şikayet ve iş birliği talepleriniz için Hesaply.io ekibiyle iletişime
+geçin.{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto px-4 py-12 md:py-20 animate-in fade-in slide-in-from-bottom-4">
+    <div class="mb-16 text-center">
+        <h1 class="text-4xl md:text-6xl font-extrabold text-slate-900 tracking-tight leading-tight mb-6">Bize Ulaşın
+        </h1>
+        <p class="text-lg md:text-xl text-slate-600 leading-relaxed max-w-2xl mx-auto italic font-medium">
+            Önerileriniz ve her türlü geri bildiriminiz için buradayız. En geç 24 saat içinde yanıt veriyoruz.
+        </p>
+    </div>
+
+    <div
+        class="bg-white rounded-4xl p-8 md:p-14 shadow-2xl shadow-blue-900/5 relative overflow-hidden border border-slate-100">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 relative z-10">
+            <div>
+                <h4 class="text-2xl font-bold text-slate-900 mb-6 border-l-4 border-blue-600 pl-4 tracking-tight">
+                    İletişim Kanalları</h4>
+                <div class="space-y-8 mt-10">
+                    <div class="flex items-start gap-5 group">
+                        <div
+                            class="w-12 h-12 bg-blue-50 rounded-2xl flex items-center justify-center text-blue-600 group-hover:bg-blue-600 group-hover:text-white transition-all shadow-sm">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" class="h-6 w-6">
+                                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+                                <polyline points="22,6 12,13 2,6" />
+                            </svg>
+                        </div>
+                        <div>
+                            <p class="text-xs font-black text-slate-400 uppercase tracking-[0.2em] mb-1">E-Posta Adresi
+                            </p>
+                            <a href="mailto:info@hesaply.io"
+                                class="text-lg font-bold text-slate-800 hover:text-blue-600 transition-colors">info@hesaply.io</a>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-5 group">
+                        <div
+                            class="w-12 h-12 bg-indigo-50 rounded-2xl flex items-center justify-center text-indigo-600 group-hover:bg-indigo-600 group-hover:text-white transition-all shadow-sm">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" class="h-6 w-6">
+                                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+                            </svg>
+                        </div>
+                        <div>
+                            <p class="text-xs font-black text-slate-400 uppercase tracking-[0.2em] mb-1">Sosyal Medya
+                            </p>
+                            <p class="text-lg font-bold text-slate-800">@hesaply_io (Çok yakında!)</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <div class="p-8 bg-slate-900 text-white rounded-3xl border border-slate-800 relative z-10">
+                    <h5 class="text-xl font-bold mb-4 flex items-center gap-2">
+                        <span class="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></span>
+                        Bize Mesaj Gönderin
+                    </h5>
+                    <p class="text-slate-400 text-sm mb-8 leading-relaxed italic">
+                        Hesaplama araçlarımızda hata fark ettiyseniz veya yeni araç öneriniz varsa lütfen bize doğrudan
+                        e-posta gönderin. Topluluk odaklı bir platformuz.
+                    </p>
+                    <div class="text-sm font-medium pt-4 border-t border-white/10 text-center">
+                        Tüm iletileriniz tek tek incelenir ve önemsenir.
+                    </div>
+                </div>
+                <!-- Decorative items -->
+                <div class="absolute -bottom-20 -right-20 w-80 h-80 bg-blue-600/10 blur-[100px] rounded-full -z-10">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -21,8 +21,10 @@ YUZDE_CONFIG = {
         ], "default": "calculate"}
     ],
     "faq": [
-        {"question": "Yüzde hesaplama nasıl yapılır?", "answer": "Bir sayının yüzdesini bulmak için o sayıyı yüzde oranı ile çarpıp yüze bölmeniz yeterlidir."},
-        {"question": "Yüzde artış formülü nedir?", "answer": "Anapara * (1 + (Oran/100)) formülüyle artış tutarı hesaplanır."}
+        {"question": "Matematiksel olarak yüzde hesaplama mantığı nedir?", "answer": "Bir sayının (A) belirlenen oranda (B) yüzdesini bulmak için (A * B) / 100 formülü kullanılır. Örneğin 200'ün yüzde 20'si: (200 * 20) / 100 = 40 eder."},
+        {"question": "Yüzde artış ve azalış nasıl hesaplanır?", "answer": "Artış için sayı (1 + Oran/100) ile, azalış için sayı (1 - Oran/100) ile çarpılır. Maaş zamları veya indirim hesaplarında bu yöntem kullanılır."},
+        {"question": "A sayısı B sayısının yüzde kaçıdır nasıl bulunur?", "answer": "Bu işlemi yapmak için A sayısı B'ye bölünür ve sonuç 100 ile çarpılır. Formül: (A / B) * 100."},
+        {"question": "KDV dahil ve KDV hariç hesaplamaları için yüzde aracı kullanılır mı?", "answer": "Evet, KDV dâhil fiyatı bulmak için '% Kadar Ekle' işlemini, KDV hariç fiyatı bulmak için ise orantı kurarak '% azalış' mantığını kullanabilirsiniz."}
     ]
 }
 
@@ -41,7 +43,9 @@ USLU_CONFIG = {
         {"name": "exponent", "type": "number", "label": "Üs (Kuvvet)", "required": True}
     ],
     "faq": [
-        {"question": "Sıfırıncı kuvvet kaçtır?", "answer": "Sıfır hariç tüm sayıların sıfırıncı kuvveti 1'dir."}
+        {"question": "Üslü sayılarda taban ve üs nedir?", "answer": "Taban, çarpılacak olan sayıdır; üs (kuvvet) ise tabanın kendisiyle kaç kere çarpılacağını ifade eder. Örneğin 2^3 işleminde 2 taban, 3 üstür."},
+        {"question": "Üslü sayıların günlük hayatta kullanımı nedir?", "answer": "Nüfus artışı, bileşik faiz hesaplamaları, deprem büyüklüğü (Richter ölçeği) ve bilgisayar veri birimlerinde (MB, GB) üslü sayılar kullanılır."},
+        {"question": "Negatif sayıların üssü nasıl hesaplanır?", "answer": "Negatif bir sayının çift kuvveti pozitif, tek kuvveti ise negatiftir. Örneğin (-2)^2 = 4, (-2)^3 = -8 eder."}
     ]
 }
 
@@ -60,7 +64,9 @@ KOKLU_CONFIG = {
         {"name": "degree", "type": "number", "label": "Kök Derecesi", "default": 2}
     ],
     "faq": [
-        {"question": "Karekök nedir?", "answer": "Bir sayının ikinci dereceden köküne karekök denir."}
+        {"question": "Karekök dışına çıkarma işlemi nasıl yapılır?", "answer": "Bir sayı, kendisiyle çarpıldığında kök içindeki sayıyı veren 'X' sayısını bulma işlemidir. Örneğin 25'in karekökü 5'tir çünkü 5*5=25'tir."},
+        {"question": "Küp kök ve dördüncü derece kök ne anlama gelir?", "answer": "Küp kök, bir sayının 3. dereceden köküdür; yani hangi sayının küpü (X*X*X) bu sayıya eşittir sorusunun cevabıdır. Dördüncü derecede ise bir sayı 4 kere çarpılır."},
+        {"question": "Negatif sayıların kökü alınabilir mi?", "answer": "Reel sayılar kümesinde negatif sayıların çift dereceden (karekök gibi) kökü alınamaz; ancak tek dereceden (küp kök gibi) kökü alınabilir."}
     ]
 }
 
@@ -78,6 +84,8 @@ FAKTORIYEL_CONFIG = {
         {"name": "n", "type": "number", "label": "Sayı (n)", "required": True, "min": 0, "max": 1000}
     ],
     "faq": [
-        {"question": "0 faktöriyel neden 1'dir?", "answer": "Matematiksel tanım gereği ve kombinasyon hesaplarının tutarlı olması için 0! = 1 kabul edilir."}
+        {"question": "Faktöriyel nerede kullanılır?", "answer": "Olasılık, kombinasyon ve permütasyon hesaplamalarında nesnelerin farklı dizilimlerini bulmak için faktöriyelden yararlanılır."},
+        {"question": "1000! (faktöriyel) neden çok büyük bir sayıdır?", "answer": "Faktöriyel değerleri üstel olarak değil, çok daha hızlı (faktöriyel hızında) büyür. 1000! sayısı evrendeki atom sayısından daha fazla basamağa sahiptir."},
+        {"question": "Gama fonksiyonu ve faktöriyel ilişkisi nedir?", "answer": "Faktöriyel sadece tam sayılar için tanımlıyken, Gama fonksiyonu faktöriyel kavramını ondalıklı ve karmaşık sayılara genişleten matematiksel bir fonksiyondur."}
     ]
 }

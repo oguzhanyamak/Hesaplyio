@@ -46,12 +46,24 @@ LOAN_CONFIG = {
     "logic_function": calculate_loan_repayment,
     "faq": [
         {
-            "question": "İhtiyaç kredisi hesaplamasında faiz harici neler eklenir?",
-            "answer": "Kredi taksitleri hesaplanırken, aylık faiz oranının üzerine banka ve sigorta muameleleri vergisi (BSMV) ve kaynak kullanımı destekleme fonu (KKDF) kesintileri de eklenerek efektif faiz oranı bulunur."
+            "question": "İhtiyaç kredisi taksitleri nasıl hesaplanır?",
+            "answer": "İhtiyaç kredisi taksitleri, ana para üzerine banka faizi, %15 KKDF ve %5 BSMV vergileri eklenerek bulunan 'toplam faiz oranı' üzerinden her ay kalan ana paraya işletilerek hesaplanır."
         },
         {
-            "question": "Taksitlerimi erken ödersem ne olur?",
-            "answer": "Kredi taksitlerinizi erken kapattığınız takdirde kalan ayların faizi, KKDF ve BSMV kesintileri tahsil edilmez ve anapara üzerinden borcunuzu kapatırsınız."
+            "question": "En uygun kredi vadesi ne kadardır?",
+            "answer": "En uygun vade, aylık gelirinize göre belirlenmelidir. Vade uzadıkça aylık taksitler düşer ancak bankaya ödeyeceğiniz toplam faiz maliyeti artar. Genellikle 24 veya 36 ay ideal dengedir."
+        },
+        {
+            "question": "Kredi hesaplamasında KKDF ve BSMV nedir?",
+            "answer": "KKDF (Kaynak Kullanımını Destekleme Fonu) %15, BSMV (Banka ve Sigorta Muameleleri Vergisi) %10 (ihtiyaç kredilerinde) oranında faiz üzerinden alınan devlet vergileridir."
+        },
+        {
+            "question": "Dosya masrafı kredi taksitini etkiler mi?",
+            "answer": "Dosya masrafı genellikle kredi başında peşin (veya kredi tutarından düşülerek) alınır. Aylık taksit tutarlarını doğrudan değiştirmez ancak projenin toplam maliyetini (Yıllık Maliyet Oranı) etkiler."
+        },
+        {
+            "question": "Kredi erken kapatma cezası var mıdır?",
+            "answer": "İhtiyaç kredilerinde erken kapatma veya ara ödeme cezası (erken ödeme tazminatı) bulunmamaktadır. Kalan anapara üzerinden borcunuzu kapatarak faizden tasarruf edebilirsiniz."
         }
     ]
 }

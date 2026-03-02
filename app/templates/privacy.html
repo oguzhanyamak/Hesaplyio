@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+{% block title %}Gizlilik Politikası ve Çerezler | {{ settings.app_name }}{% endblock %}
+{% block description %}Verileriniz bizimle güvende. {{ settings.app_name }} gizlilik politikası ve çerez kullanımı
+hakkında detaylı bilgi.{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto px-4 py-12 md:py-20 animate-in fade-in slide-in-from-bottom-4">
+    <div class="mb-12">
+        <h1 class="text-3xl md:text-5xl font-extrabold text-slate-900 tracking-tight leading-tight mb-4">Gizlilik
+            Politikası</h1>
+        <p class="text-slate-500 font-medium">Son Güncelleme: 3 Mart 2026</p>
+    </div>
+
+    <div class="bg-white rounded-3xl p-8 md:p-12 shadow-sm border border-slate-200">
+        <div class="space-y-12 prose prose-slate max-w-none">
+
+            <section>
+                <h2 class="text-2xl font-bold text-slate-900 mb-4 border-l-4 border-emerald-500 pl-4">1. Verilerin
+                    Korunması</h2>
+                <p class="text-slate-600 leading-relaxed text-lg">
+                    Hesaply.io olarak kullanıcılarımızın gizliliğine son derece önem veriyoruz. Hesaplama araçlarımızı
+                    kullanırken girdiğiniz (Kredi Tutarı, Faiz Oranı, Sınav Sonuçları vb.) hiçbir veri
+                    <strong>sunucularımızda saklanmaz, kaydedilmez veya üçüncü taraflarla paylaşılmaz.</strong> Tüm
+                    hesaplama işlemleri tarayıcınız (client-side) ve uygulama sunucumuz arasında anlık olarak
+                    gerçekleşir.
+                </p>
+            </section>
+
+            <section>
+                <h2 class="text-2xl font-bold text-slate-900 mb-4 border-l-4 border-blue-500 pl-4">2. Çerezler (Cookies)
+                </h2>
+                <p class="text-slate-600 leading-relaxed text-lg mb-6">
+                    Sitemizde sadece kullanıcı deneyimini iyileştirmek ve anonim trafik analizi yapmak amacıyla çerezler
+                    kullanılmaktadır:
+                </p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="bg-slate-50 p-6 rounded-2xl border border-slate-200">
+                        <h3 class="font-bold text-slate-900 text-sm uppercase tracking-wider mb-2">Performans Çerezleri
+                        </h3>
+                        <p class="text-sm text-slate-500 italic">Google Analytics aracılığıyla anonim ziyaretçi
+                            istatistikleri toplarız.</p>
+                    </div>
+                    <div class="bg-slate-50 p-6 rounded-2xl border border-slate-200">
+                        <h3 class="font-bold text-slate-900 text-sm uppercase tracking-wider mb-2">Reklam Çerezleri</h3>
+                        <p class="text-sm text-slate-500 italic">AdSense aracılığıyla size özel, kişiselleştirilmiş
+                            reklamlar sunulabilir.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section>
+                <h2 class="text-2xl font-bold text-slate-900 mb-4 border-l-4 border-indigo-500 pl-4">3. İletişim
+                    Bilgileri</h2>
+                <p class="text-slate-600 leading-relaxed text-lg">
+                    Gizlilik politikamız hakkındaki sorularınız için <a href="/iletisim"
+                        class="text-blue-600 font-bold hover:underline">iletişim sayfamız</a> üzerinden bizimle irtibata
+                    geçebilirsiniz.
+                </p>
+            </section>
+
+            <div class="pt-8 border-t border-slate-100 mt-12 text-center">
+                <p class="text-sm text-slate-400">Bu politika, Hesaply.io kullanıcılarına şeffaf bir deneyim sunmak
+                    amacıyla hazırlanmıştır.</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

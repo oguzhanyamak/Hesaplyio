@@ -46,12 +46,24 @@ MORTGAGE_LOAN_CONFIG = {
     "logic_function": calculate_mortgage_loan,
     "faq": [
         {
-            "question": "Konut kredisinde vergi kesintisi var mıdır?",
-            "answer": "Hayır, Türkiye'de devletin konut alımını desteklemesi amacıyla konut kredilerinde BSMV (Banka ve Sigorta Muameleleri Vergisi) ve KKDF (Kaynak Kullanımını Destekleme Fonu) oranları %0 (Sıfır) olarak uygulanmaktadır."
+            "question": "Konut kredisinde vergi kesintisi neden yok?",
+            "answer": "Türkiye'de konut alımını desteklemek amacıyla, gerçek kişilerin alacağı konut kredilerinde %15 KKDF ve %5 BSMV vergileri sıfır (0) olarak uygulanır. Bu durum konut kredisini diğer kredilerden daha maliyet-avantajlı kılar."
         },
         {
-            "question": "Konut kredisi en fazla kaç ay vade ile verilir?",
-            "answer": "Bankaların politikalarına göre değişmekle birlikte genellikle en fazla 120 ay (10 Yıl) vade yapılmaktadır. Ancak bazı özel kampanyalarda 240 aya kadar vadeli konut kredileri de mevcuttur."
+            "question": "Konut kredisi peşinat oranları nedir?",
+            "answer": "BDDK kuralları çerçevesinde, evin enerji sınıfına ve değerine göre değişmekle birlikte genellikle evin ekspertiz değerinin %80'ine kadar kredi kullandırılabilir. %20 peşinat standart kabul edilir."
+        },
+        {
+            "question": "Konut kredisinde hayat sigortası zorunlu mu?",
+            "answer": "Yasal olarak zorunlu değildir ancak bankalar kredi riskini minimize etmek için genellikle hayat sigortasını şart koşarlar. Hayat sigortası yaptırmamanız durumunda faiz oranı yükselebilir."
+        },
+        {
+            "question": "Ekspertiz ücretini banka mı öder?",
+            "answer": "Hayır, gayrimenkul değerleme (ekspertiz) ücreti bankanın anlaştığı bağımsız firmalara ödenir ve bu masraf kredi kullanıcısı tarafından karşılanır."
+        },
+        {
+            "question": "Konut kredisi yapılandırma avantajlı mıdır?",
+            "answer": "Piyasadaki faiz oranları düştüğünde konut kredinizi yapılandırarak (refinansman) aylık taksitlerinizi düşürebilirsiniz. Ancak erken kapatma komisyonlarını da hesaba katmalısınız."
         }
     ]
 }
