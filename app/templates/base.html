@@ -4,11 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <!-- Preconnect to critical domains for faster loading -->
-    <link rel="preconnect" href="https://cdn.tailwindcss.com" crossorigin>
-    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+    <link rel="preconnect" href="https://cdn.tailwindcss.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
-    <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin>
+    <link rel="dns-prefetch" href="https://www.googletagmanager.com">
+    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
 
     <!-- Google Analytics: Delayed Loading for PageSpeed Optimization -->
     <script>
@@ -73,8 +73,8 @@
         href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap"
         rel="stylesheet" media="all">
 
-    <!-- Tailwind CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Tailwind CDN: Priority Loading -->
+    <script src="https://cdn.tailwindcss.com" fetchpriority="high"></script>
     <script>
         window.tailwind.config = {
             theme: {
@@ -273,12 +273,12 @@
 
                 <nav class="flex flex-wrap justify-center gap-x-8 gap-y-4" aria-label="Sayfaaltı Linkleri">
                     <a href="/hakkimizda"
-                        class="text-sm font-bold text-slate-500 hover:text-blue-600 transition-all hover:-translate-y-0.5">Biz
+                        class="text-sm font-bold text-slate-600 hover:text-blue-600 transition-all hover:-translate-y-0.5">Biz
                         Kimiz?</a>
                     <a href="/iletisim"
-                        class="text-sm font-bold text-slate-500 hover:text-blue-600 transition-all hover:-translate-y-0.5">İletişim</a>
+                        class="text-sm font-bold text-slate-600 hover:text-blue-600 transition-all hover:-translate-y-0.5">İletişim</a>
                     <a href="/gizlilik"
-                        class="text-sm font-bold text-slate-500 hover:text-blue-600 transition-all hover:-translate-y-0.5">Gizlilik
+                        class="text-sm font-bold text-slate-600 hover:text-blue-600 transition-all hover:-translate-y-0.5">Gizlilik
                         & Çerezler</a>
                 </nav>
             </div>

@@ -66,7 +66,7 @@ async def serve_calculator_page(request: Request, calculator_slug: str):
 @router.get("/robots.txt")
 async def robots():
     """Tells search engines what to crawl."""
-    content = f"User-agent: *\nAllow: /\nSitemap: {settings.domain}/sitemap.xml"
+    content = f"User-agent: *\nAllow: /\nDisallow: /api/\n\nSitemap: {settings.domain}/sitemap.xml"
     return Response(content=content, media_type="text/plain")
 
 @router.get("/sitemap.xml")
@@ -75,8 +75,17 @@ async def sitemap():
     calculators = registry.get_all()
     now = datetime.now().strftime("%Y-%m-%d")
     
-    # Static pages (Home)
-    urls = [f"<url><loc>{settings.domain}/</loc><lastmod>{now}</lastmod><priority>1.0</priority></url>"]
+    # All active routes
+    static_pages = ["/", "/hakkimizda", "/gizlilik", "/iletisim"]
+    
+    urls = []
+    
+    # Static pages
+    for page in static_pages:
+        priority = "1.0" if page == "/" else "0.5"
+        urls.append(
+            f"<url><loc>{settings.domain}{page}</loc><lastmod>{now}</lastmod><priority>{priority}</priority></url>"
+        )
     
     # Dynamic calculator pages
     for calc in calculators:
