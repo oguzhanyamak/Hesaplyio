@@ -19,8 +19,31 @@ FAIZ_CONFIG = {
             {"label": "Bileşik Faiz", "value": "compound"}
         ], "default": "simple"}
     ],
+    "sections": [
+        {
+            "title": "Banka ve Mevduat Faizi Nasıl Hesaplanır?",
+            "content": """
+                <p>Faiz hesaplama, belli bir süre için bankaya yatırılan veya çekilen paranın (anapara) kira bedeli olarak düşünülebilir. İki ana türü vardır:</p>
+                <h3 class="text-xl font-bold text-slate-800 mt-6 mb-3">Basit Faiz vs. Bileşik Faiz</h3>
+                <p><strong>Basit Faiz:</strong> Sadece anapara üzerinden hesaplanan faizdir. Yıl sonundaki getiri her zaman aynıdır.</p>
+                <p><strong>Bileşik Faiz:</strong> Kazandığınız faizin ana paraya eklenerek, bir sonraki dönemde faizin de faizinin hesaplanmasıdır. Uzun vadede daha yüksek getiri sağlar.</p>
+                <div class="bg-indigo-50 p-6 rounded-2xl border border-indigo-100 my-6 text-indigo-900 italic">
+                    "Bileşik faiz, dünyanın sekizinci harikasıdır. Onu anlayan kazanır, anlamayan öder." - Albert Einstein
+                </div>
+            """
+        }
+    ],
     "faq": [
-        {"question": "Bileşik faiz nedir?", "answer": "Faiz tutarının anaparaya eklenerek bir sonraki dönemde faiz üzerinden tekrar faiz hesaplanmasıdır."}
+        {"question": "Bileşik faiz nedir?", "answer": "Faiz tutarının her dönem sonunda anaparaya eklenerek bir sonraki dönemde faiz üzerinden tekrar faiz hesaplandığı sistemdir."},
+        {"question": "Basit faiz formülü nedir?", "answer": "(Anapara * Faiz Oranı * Vade) / 100 formülü ile hesaplanır."},
+        {"question": "Net faiz getirisi nasıl bulunur?", "answer": "Brüt faiz gelirinden %5 ile %15 arasında değişen stopaj (vergi) kesintisi düştükten sonra kalan tutardır."},
+        {"question": "Mevduat faizi hesaplarken vade gün sayısı önemli mi?", "answer": "Evet, bankalar faizi genellikle günlük bazda hesaplar. (Gün Sayısı / 365) oranı kullanılır."},
+        {"question": "Anapara korumalı hesap nedir?", "answer": "Faiz getirisi sağlarken ana paranın hiçbir risk altında olmadığını garanti eden mevduat türüdür."}
+    ],
+    "related_calculators": [
+        {"title": "İhtiyaç Kredisi Hesaplama", "slug": "kredi-hesaplama", "url": "/kredi-hesaplama", "description": "Borç alırken katlanacağınız maliyeti hesaplayın."},
+        {"title": "Yüzde Hesaplama", "slug": "yuzde-hesaplama", "url": "/yuzde-hesaplama", "description": "Genel artış ve oran hesaplamaları yapın."},
+        {"title": "Altın Oran Hesaplama", "slug": "altin-oran-hesaplama", "url": "/altin-oran-hesaplama", "description": "Sanat ve mimarideki estetik oranları bulun."}
     ]
 }
 

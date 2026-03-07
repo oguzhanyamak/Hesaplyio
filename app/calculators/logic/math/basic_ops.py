@@ -81,3 +81,49 @@ def calculate_factorial(n: int | str) -> dict:
         "summary": { "label": f"{num}! Sonucu", "value": str(result) if num > 20 else result },
         "breakdown": [{"label": "Sayı", "value": num}]
     }
+def calculate_vat(value: float, rate: float, mode: str = "add") -> dict:
+    """KDV Hesaplama: Dahil (add) veya Hariç (subtract)."""
+    try:
+        v = float(value)
+        r = float(rate)
+    except ValueError:
+        raise ValueError("Geçerli sayısal değerler girin.")
+    
+    if mode == "add":
+        # Hariçten Dahile
+        vat_amount = v * (r / 100.0)
+        total_amount = v + vat_amount
+    else:
+        # Dahilden Harice
+        total_amount = v / (1 + (r / 100.0))
+        vat_amount = v - total_amount
+        
+    return {
+        "summary": { "label": "Toplam Tutar", "value": round(total_amount, 2) },
+        "breakdown": [
+            {"label": "Matrah (KDV Hariç)", "value": round(v if mode=="add" else total_amount, 2)},
+            {"label": "KDV Tutarı", "value": round(vat_amount, 2)},
+            {"label": "Toplam (KDV Dahil)", "value": round(total_amount if mode=="add" else v, 2)}
+        ]
+    }
+
+def calculate_discount(price: float, rate: float) -> dict:
+    """İndirim Hesaplama."""
+    try:
+        p = float(price)
+        r = float(rate)
+    except ValueError:
+        raise ValueError("Geçerli sayısal değerler girin.")
+        
+    discount_amount = p * (r / 100.0)
+    final_price = p - discount_amount
+    
+    return {
+        "summary": { "label": "İndirimli Fiyat", "value": round(final_price, 2) },
+        "breakdown": [
+            {"label": "Eski Fiyat", "value": round(p, 2)},
+            {"label": "İndirim Oranı", "value": f"%{r}"},
+            {"label": "İndirim Tutarı", "value": round(discount_amount, 2)},
+            {"label": "Ödenecek Tutar", "value": round(final_price, 2)}
+        ]
+    }

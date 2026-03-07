@@ -33,7 +33,30 @@ WORDS_CONFIG = {
     "inputs": [
         {"name": "n", "type": "number", "label": "Sayı", "required": True}
     ],
+    "sections": [
+        {
+            "title": "Sayıları Yazıya Çevirme Nerede Kullanılır?",
+            "content": """
+                <p>Rakamların yazı ile ifade edilmesi (sayı okunuşu), özellikle resmi belgelerde, çek ve senet işlemlerinde veya fatura keserken büyük önem taşır. Hatalı yazılan bir rakam maddi kayıplara yol açabileceği için bu işlem titizlikle yapılmalıdır.</p>
+                <h3 class="text-xl font-bold text-slate-800 mt-6 mb-3">Türkçe Sayı Yazım Kuralları</h3>
+                <ul class="list-disc ml-6 space-y-2 mt-4">
+                    <li>Sayılar genellikle ayrı yazılır (Örn: On beş).</li>
+                    <li>Çek, senet gibi ticari belgelerde bitişik yazılır (Örn: Onbeş).</li>
+                    <li>Parasal değerlerde kuruş kısımları da belirtilmelidir.</li>
+                </ul>
+            """
+        }
+    ],
     "faq": [
-        {"question": "Kaç basamağa kadar destekliyor?", "answer": "Şu an için 1 trilyon (12 basamak) sınırına kadar destek sunmaktadır."}
+        {"question": "Sayıları yazıya çevirirken nelere dikkat edilmeli?", "answer": "Özellikle bankacılık ve muhasebe işlemlerinde, sayının sonuna 'Yalnız' ibaresi eklenmesi ve bitişik yazılması güvenlik sağlar."},
+        {"question": "Kaç basamağa kadar destekliyor?", "answer": "Sistemimiz şu an için 1 trilyon (12 basamak) sınırına kadar tüm sayıların Türkçe okunuşunu desteklemektedir."},
+        {"question": "Ondalıklı sayıları yazıya çevirebilir mi?", "answer": "Evet, virgüllü kısımları 'nokta' veya 'virgül' olarak ayırarak okunuşunu öğrenebilirsiniz."},
+        {"question": "Sayıların yazımı ayrı mı olmalı?", "answer": "TDK kurallarına göre oyun adları ve çek/senet işlemleri hariç sayılar daima ayrı yazılmalıdır."},
+        {"question": "Çek senet kapama işlemi nedir?", "answer": "Yazılan sayının başına ve sonuna '#' veya '*' gibi işaretler konularak araya rakam eklenmesini önleme işlemidir."}
+    ],
+    "related_calculators": [
+        {"title": "Yüzde Hesaplama", "slug": "yuzde-hesaplama", "url": "/yuzde-hesaplama", "description": "Oransal hesaplamalarınızı hızlandırın."},
+        {"title": "Kredi Hesaplama", "slug": "kredi-hesaplama", "url": "/kredi-hesaplama", "description": "Taksit tutarlarını yazı ile kontrol edin."},
+        {"title": "KDV Hesaplama", "slug": "yuzde-hesaplama", "url": "/yuzde-hesaplama", "description": "Faturalarınız için KDV dâhil ve hariç tutarları bulun."}
     ]
 }

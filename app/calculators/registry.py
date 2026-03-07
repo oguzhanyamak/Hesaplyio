@@ -16,9 +16,9 @@ class CalculatorRegistry:
         for root, dirs, files in os.walk(def_path):
             for file in files:
                 if file.endswith(".py") and not file.startswith("__"):
-                    # Calculate module path robustly for both Windows and Linux
                     rel_path = os.path.relpath(os.path.join(root, file), def_path)
-                    normalized_path = rel_path.replace("\\", ".").replace("/", ".").replace(".py", "")
+                    if file.endswith(".py"):
+                        normalized_path = rel_path.replace("\\", ".").replace("/", ".")[:-3]
                     module_name = f"app.calculators.definitions.{normalized_path}"
                     try:
                         # Use importlib.reload for robustness during StatReload

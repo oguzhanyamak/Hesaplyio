@@ -44,26 +44,45 @@ MORTGAGE_LOAN_CONFIG = {
         }
     ],
     "logic_function": calculate_mortgage_loan,
-    "faq": [
+    "sections": [
         {
-            "question": "Konut kredisinde vergi kesintisi neden yok?",
-            "answer": "Türkiye'de konut alımını desteklemek amacıyla, gerçek kişilerin alacağı konut kredilerinde %15 KKDF ve %5 BSMV vergileri sıfır (0) olarak uygulanır. Bu durum konut kredisini diğer kredilerden daha maliyet-avantajlı kılar."
+            "title": "Konut Kredisi Hesaplama ve Ev Sahibi Olma Süreci",
+            "content": """
+                <p>Konut kredisi (mortgage), hayalinizdeki eve sahip olmanız için bankalar tarafından uzun vadeli ve düşük faizli olarak sunulan bir kredi türüdür. Diğer kredi türlerinden en büyük farkı, KKDF ve BSMV gibi yasal vergilerden muaf olması ve alınan evin banka tarafından teminat (ipotek) olarak kabul edilmesidir.</p>
+                <h3 class="text-xl font-bold text-slate-800 mt-6 mb-3">Neden Konut Kredisi?</h3>
+                <ul class="list-disc ml-6 space-y-2 mt-4">
+                    <li><strong>Vergi Avantajı:</strong> Bireysel konut kredilerinde %0 vergi uygulanır.</li>
+                    <li><strong>Uzun Vade:</strong> 120, 180 hatta 240 aya varan vade seçenekleri mevcuttur.</li>
+                    <li><strong>Sermaye Koruma:</strong> Tüm birikiminizi eve yatırmak yerine bir kısmını kredilendirerek nakit akışınızı koruyabilirsiniz.</li>
+                </ul>
+            """
         },
         {
-            "question": "Konut kredisi peşinat oranları nedir?",
-            "answer": "BDDK kuralları çerçevesinde, evin enerji sınıfına ve değerine göre değişmekle birlikte genellikle evin ekspertiz değerinin %80'ine kadar kredi kullandırılabilir. %20 peşinat standart kabul edilir."
-        },
-        {
-            "question": "Konut kredisinde hayat sigortası zorunlu mu?",
-            "answer": "Yasal olarak zorunlu değildir ancak bankalar kredi riskini minimize etmek için genellikle hayat sigortasını şart koşarlar. Hayat sigortası yaptırmamanız durumunda faiz oranı yükselebilir."
-        },
-        {
-            "question": "Ekspertiz ücretini banka mı öder?",
-            "answer": "Hayır, gayrimenkul değerleme (ekspertiz) ücreti bankanın anlaştığı bağımsız firmalara ödenir ve bu masraf kredi kullanıcısı tarafından karşılanır."
-        },
-        {
-            "question": "Konut kredisi yapılandırma avantajlı mıdır?",
-            "answer": "Piyasadaki faiz oranları düştüğünde konut kredinizi yapılandırarak (refinansman) aylık taksitlerinizi düşürebilirsiniz. Ancak erken kapatma komisyonlarını da hesaba katmalısınız."
+            "title": "Konut Kredisi Masrafları Nelerdir?",
+            "content": """
+                <div class="bg-white border border-slate-200 p-6 rounded-2xl shadow-sm space-y-4">
+                    <p>Kredi taksitlerinin yanı sıra, ev alırken şu masrafları da bütçenize dahil etmelisiniz:</p>
+                    <ul class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <li class="flex items-center gap-2"><div class="w-1.5 h-1.5 bg-blue-600 rounded-full"></div> Ekspertiz Ücreti</li>
+                        <li class="flex items-center gap-2"><div class="w-1.5 h-1.5 bg-blue-600 rounded-full"></div> Tapu Harcı (%4)</li>
+                        <li class="flex items-center gap-2"><div class="w-1.5 h-1.5 bg-blue-600 rounded-full"></div> Kredi Tahsis Ücreti (%0.5)</li>
+                        <li class="flex items-center gap-2"><div class="w-1.5 h-1.5 bg-blue-600 rounded-full"></div> DASK ve Konut Sigortası</li>
+                    </ul>
+                </div>
+            """
         }
+    ],
+    "faq": [
+        {"question": "Konut kredisinde vergi kesintisi neden yok?", "answer": "Türkiye'de konut alımını desteklemek amacıyla, bireysel konut kredilerinde %15 KKDF ve %5 BSMV vergileri sıfır (0) olarak uygulanır."},
+        {"question": "Konut kredisi peşinat oranları nedir?", "answer": "Satın alınacak evin ekspertiz değerine ve enerji sınıfına göre değişmekle birlikte, genellikle %20 peşinat ödenmesi ve %80'ine kadar kredi kullandırılması beklenir."},
+        {"question": "Konut kredisinde hayat sigortası zorunlu mu?", "answer": "Yasal olarak bir zorunluluk olmasa da bankalar kredi riskini yönetmek adına hayat sigortasını genellikle şart koşarlar. Sigortasız kredi seçeneklerinde faiz oranları daha yüksek olabilir."},
+        {"question": "Ekspertiz ücretini banka mı öder?", "answer": "Değerleme (ekspertiz) hizmeti bağımsız firmalarca verilir ve ücreti kredi başvurusu yapan kişi tarafından karşılanır."},
+        {"question": "Kaç yaşına kadar konut kredisi çekilebilir?", "answer": "Çoğu banka, kredi vadesi bittiğinde kişinin yaşının 70 veya 75'i geçmemesini şart koşar."},
+        {"question": "İpotek ne zaman kalkar?", "answer": "Kredi borcunun tamamı ödendikten sonra bankadan alınan fek yazısı ile tapu dairesinde ipotek kaldırma işlemi yapılır."}
+    ],
+    "related_calculators": [
+        {"title": "İhtiyaç Kredisi Hesaplama", "slug": "kredi-hesaplama", "url": "/kredi-hesaplama", "description": "Küçük harcamalarınız için genel amaçlı kredi maliyetini bulun."},
+        {"title": "Mevduat Getirisi Hesaplama", "slug": "mevduat-faizi-hesaplama", "url": "/mevduat-faizi-hesaplama", "description": "Birikimlerinizi değerlendirirken ne kadar kazanacağınızı görün."},
+        {"title": "Kira Artış Oranı Hesaplama", "slug": "kira-artisi-hesaplama", "url": "/kira-artis-orani-hesaplama", "description": "Yasal sınırlara göre yeni kira bedelinizi belirleyin."}
     ]
 }

@@ -264,10 +264,44 @@
     </div>
 </div>
 
-<!-- SEO & FAQ Block -->
-<div class="mt-20 border-t border-slate-200 pt-16">
-    <h2 class="text-3xl font-bold text-slate-900 mb-8 border-l-4 border-blue-600 pl-4">Nasıl Hesaplanır ve Sıkça
-        Sorulan Sorular</h2>
+    <!-- Dynamic SEO Content Sections -->
+    {% if config.sections %}
+    <div class="mt-20 space-y-16">
+        {% for section in config.sections %}
+        <section>
+            <h2 class="text-3xl font-bold text-slate-900 mb-6 border-l-4 border-blue-600 pl-4">{{ section.title }}</h2>
+            <div class="prose prose-slate max-w-none text-slate-600 leading-relaxed space-y-4">
+                {{ section.content | safe }}
+            </div>
+        </section>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <!-- Internal Linking / Related Calculators -->
+    {% if config.related_calculators %}
+    <div class="mt-20 bg-slate-50 rounded-3xl p-8 sm:p-12 border border-slate-200">
+        <h2 class="text-2xl font-bold text-slate-900 mb-8">İlginizi Çekebilir</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {% for related in config.related_calculators %}
+            <a href="{{ related.url }}" class="group block p-6 bg-white rounded-2xl border border-slate-100 shadow-sm hover:shadow-md hover:border-blue-200 transition-all">
+                <h3 class="font-bold text-slate-800 group-hover:text-blue-600 transition-colors">{{ related.title }}</h3>
+                <p class="mt-2 text-sm text-slate-500">{{ related.description }}</p>
+                <div class="mt-4 flex items-center text-xs font-bold text-blue-600 uppercase tracking-wider">
+                    Hesapla
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                    </svg>
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- SEO & FAQ Block -->
+    <div class="mt-20 border-t border-slate-200 pt-16">
+        <h2 class="text-3xl font-bold text-slate-900 mb-8 border-l-4 border-blue-600 pl-4">Sıkça Sorulan Sorular</h2>
 
     <!-- JSON-LD Structured Data Output -->
     <script type="application/ld+json">
