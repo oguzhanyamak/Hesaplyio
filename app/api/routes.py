@@ -66,7 +66,7 @@ async def serve_calculator_page(request: Request, calculator_slug: str):
 @router.get("/robots.txt")
 async def robots():
     """Tells search engines what to crawl."""
-    content = f"User-agent: *\nAllow: /\nDisallow: /api/\n\nSitemap: {settings.domain}/sitemap.xml"
+    content = f"User-agent: *\nAllow: /\nDisallow: /api/\n\nSitemap: {settings.base_url}/sitemap.xml"
     return Response(content=content, media_type="text/plain")
 
 @router.get("/sitemap.xml")
@@ -75,22 +75,25 @@ async def sitemap():
     calculators = registry.get_all()
     now = datetime.now().strftime("%Y-%m-%d")
     
-    # All active routes
-    static_pages = ["/", "/hakkimizda", "/gizlilik", "/iletisim"]
+    # All active routes (No trailing slash except root)
+    static_pages = ["", "/hakkimizda", "/gizlilik", "/iletisim"]
     
     urls = []
     
     # Static pages
     for page in static_pages:
-        priority = "1.0" if page == "/" else "0.5"
+        # Home (root) is empty string here because settings.base_url already has no slash
+        # So base_url + "" -> https://hesaply.io
+        actual_path = page if page else "/"
+        priority = "1.0" if not page else "0.5"
         urls.append(
-            f"<url><loc>{settings.domain}{page}</loc><lastmod>{now}</lastmod><priority>{priority}</priority></url>"
+            f"<url><loc>{settings.base_url}{actual_path}</loc><lastmod>{now}</lastmod><priority>{priority}</priority></url>"
         )
     
     # Dynamic calculator pages
     for calc in calculators:
         urls.append(
-            f"<url><loc>{settings.domain}/{calc['slug']}</loc><lastmod>{now}</lastmod><priority>0.8</priority></url>"
+            f"<url><loc>{settings.base_url}/{calc['slug']}</loc><lastmod>{now}</lastmod><priority>0.8</priority></url>"
         )
     
     xml_content = f'<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + "\n".join(urls) + "\n</urlset>"
